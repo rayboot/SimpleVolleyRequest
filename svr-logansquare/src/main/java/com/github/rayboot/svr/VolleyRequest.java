@@ -45,8 +45,6 @@ import java.util.Map;
 
 /**
  * @author rayboot
- * @from 14-3-5 15:16
- * @TODO http请求返回GSON解析后对象
  */
 public class VolleyRequest<T> extends Request<T> {
     protected Class<T> mClazz;
@@ -99,12 +97,6 @@ public class VolleyRequest<T> extends Request<T> {
         return this;
     }
 
-    /**
-     * (non-Javadoc)
-     * 设置超时时间
-     *
-     * @see Request#getRetryPolicy()
-     */
     @Override
     public RetryPolicy getRetryPolicy() {
         RetryPolicy retryPolicy = new DefaultRetryPolicy(curTimeout, 0,

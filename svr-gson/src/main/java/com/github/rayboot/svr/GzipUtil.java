@@ -12,8 +12,6 @@ import java.util.zip.GZIPOutputStream;
 
 /**
  * @author rayboot
- * @from 14-3-17 19:26
- * @TODO gzip压缩，解压算法
  */
 public class GzipUtil
 {

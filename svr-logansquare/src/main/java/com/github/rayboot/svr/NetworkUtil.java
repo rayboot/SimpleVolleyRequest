@@ -10,8 +10,6 @@ import java.util.Map;
 
 /**
  * @author rayboot
- * @from 2014-1-24上午10:52:54
- * @TODO 网络相关的公用方法
  */
 public class NetworkUtil {
     /**

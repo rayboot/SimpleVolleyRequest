@@ -15,36 +15,6 @@ import java.util.Map;
 
 /**
  * @author rayboot
- * @from 14/10/31 13:58
- * @TODO Sample mGson request
- * 默认使用POST
- * 必须传 url和gsonClass
- * mUrl  请求连接地址
- * mClazz  返回json对象的类
- * mParams  请求参数
- * mErrorListener 异常时回调
- * mSuccessListener  成功时回调
- * mFinishListener   成功或异常都回调
- * <p/>
- * mClickView  控制该view的enable和clickable属性方式机关枪
- * mErrorView  控制状态页面的显示
- * <p/>
- * 例子
- * Sgr.builder(this, BaseResponse.class)
- * .url("http://baidu.com")
- * .requestParams()
- * .finishListener(new GsonRequest.FinishListener<BaseResponse>()
- * {
- * @Override public void onFinishResponse(boolean isSuccess,
- * BaseResponse response, VolleyError errorView)
- * {
- * if (isSuccess)
- * {
- * //do something
- * }
- * }
- * })
- * .post2Queue(getVolleyTag());
  */
 public class Svr<T> {
     int mMethod = Request.Method.POST;

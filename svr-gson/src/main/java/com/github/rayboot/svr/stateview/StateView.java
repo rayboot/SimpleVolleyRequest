@@ -36,12 +36,9 @@ import java.util.Map;
 
 /**
  * @author Ihsan Isik
- *         <p/>
  *         A custom view that displays an error image, a title, and a subtitle given an HTTP status
  *         code. It can be used for various other purposes like displaying other kinds of errors or
  *         just messages with images.
- * @see #setState(StateViewContent)
- * <p/>
  */
 public class StateView extends LinearLayout {
     private ImageView mErrorImageView;
@@ -158,7 +155,7 @@ public class StateView extends LinearLayout {
     /**
      * Sets error subtitle to the description of the given HTTP status code
      *
-     * @param stateCode HTTP status code
+     * @param content HTTP status code
      */
     public void setState(ErrorViewContent content) {
         if (mUseIntrinsicAnimation && mErrorImageView.getDrawable() != null) {

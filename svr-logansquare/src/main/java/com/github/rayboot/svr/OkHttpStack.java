@@ -10,8 +10,6 @@ import java.net.URL;
 
 /**
  * @author rayboot
- * @from 14/9/29 11:16
- * @TODO
  */
 public class OkHttpStack extends HurlStack
 {

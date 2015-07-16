@@ -16,8 +16,6 @@ import java.util.Map;
 
 /**
  * @author rayboot
- * @from 14/9/29 16:02
- * @TODO
  */
 public class SvrVolley {
     public static final String TAG = "SgrVolley";
