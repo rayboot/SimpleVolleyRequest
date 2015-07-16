@@ -1,5 +1,29 @@
 apply plugin: 'com.android.library'
 
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'svr-gson'
+
+    publishedGroupId = 'com.github.rayboot.svr'
+    libraryName = 'Svr-Gson'
+    artifact = 'svr-gson'
+
+    libraryDescription = 'A simple json request use volley.Svr use builder pattern.'
+
+    siteUrl = 'https://github.com/rayboot/SimpleVolleyRequest'
+    gitUrl = 'https://github.com/rayboot/SimpleVolleyRequest.git'
+
+    libraryVersion = "1.0.0"
+
+    developerId = 'rayboot'
+    developerName = 'Yan Shi'
+    developerEmail = 'rayboot.work@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
 android {
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
@@ -16,6 +40,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -25,3 +52,6 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.3.0'
     compile 'com.mcxiaoke.volley:library:1.0.17'
 }
+
+apply from: '../install.gradle'
+apply from: '../bintray.gradle'
