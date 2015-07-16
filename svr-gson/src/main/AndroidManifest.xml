@@ -1,0 +1,8 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.github.rayboot.svr">
+
+    <application android:allowBackup="true">
+
+    </application>
+
+</manifest>
