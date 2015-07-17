@@ -22,12 +22,12 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 
 import com.github.rayboot.svr.R;
 
@@ -128,7 +128,7 @@ public class StateView extends LinearLayout {
 
             if (mErrorImageView.getDrawable() instanceof AnimationDrawable) {
                 mUseIntrinsicAnimation = true;
-                ((AnimationDrawable)mErrorImageView.getDrawable()).start();
+                ((AnimationDrawable) mErrorImageView.getDrawable()).start();
             }
         } finally {
             a.recycle();
@@ -179,6 +179,8 @@ public class StateView extends LinearLayout {
         }
 
         if (isTitleVisible()) {
+            setTitleTextSize(TypedValue.COMPLEX_UNIT_SP, 18.0f);
+            setTitleLineSpacing(0.0f, 1.0f);
             setTitle(content.getTitleRes());
         }
 
@@ -259,6 +261,27 @@ public class StateView extends LinearLayout {
      */
     public void setTitleColor(int res) {
         mTitleTextView.setTextColor(res);
+    }
+
+    /**
+     * Sets the error title text to a given text size.
+     *
+     * @param unit TypedValue.COMPLEX_UNIT_SP, TypedValue.COMPLEX_UNIT_DIP.
+     * @param size text size.
+     */
+    public void setTitleTextSize(int unit, float size) {
+        mTitleTextView.setTextSize(unit, size);
+    }
+
+    /**
+     * Sets line spacing for this TextView.  Each line will have its height
+     * multiplied by <code>mult</code> and have <code>add</code> added to it.
+     *
+     * @attr ref android.R.styleable#TextView_lineSpacingExtra
+     * @attr ref android.R.styleable#TextView_lineSpacingMultiplie
+     */
+    public void setTitleLineSpacing(float add, float mult) {
+        mTitleTextView.setLineSpacing(add, mult);
     }
 
     /**
