@@ -416,4 +416,19 @@ public class StateView extends LinearLayout {
     public interface RetryListener {
         public void onRetry();
     }
+    public TextView getTitleTextView() {
+        return mTitleTextView;
+    }
+
+    public TextView getSubtitleTextView() {
+        return mSubtitleTextView;
+    }
+
+    public TextView getRetryButton() {
+        return mRetryButton;
+    }
+
+    public ImageView getStateImageView() {
+        return mErrorImageView;
+    }
 }
