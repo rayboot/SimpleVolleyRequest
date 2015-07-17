@@ -132,3 +132,20 @@ public class MainActivity extends BaseActivity {
 
 The StateView help you to show some error infomation like NO_NETWORK,ERROR_404 and so on.
 
+
+Usage
+--------
+
+Gradle:
+
+    dependencies {
+        compile 'com.github.rayboot.svr:svr-gson:1.0.3'
+    }
+
+or
+
+    dependencies {
+        compile 'com.github.rayboot.svr:svr-logansquare:1.0.3'
+    }
+
+    
