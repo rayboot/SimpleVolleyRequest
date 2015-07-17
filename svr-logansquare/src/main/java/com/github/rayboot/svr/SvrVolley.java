@@ -118,7 +118,11 @@ public class SvrVolley {
         Map<String,?> headers = sp.getAll();
         Map<String, String> result = new HashMap<>(10);
         for(Map.Entry<String,?> entry : headers.entrySet()) {
-            result.put(entry.getKey(), entry.getValue().toString());
+            if (entry.getValue() == null) {
+                result.put(entry.getKey(), null);
+            } else {
+                result.put(entry.getKey(), entry.getValue().toString());
+            }
         }
         return result;
     }

@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.github.rayboot.svr.Svr;
+import com.github.rayboot.svr.SvrVolley;
 import com.github.rayboot.svr.VolleyRequest;
 import com.github.rayboot.svr.stateview.StateView;
 
