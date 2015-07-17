@@ -277,8 +277,8 @@ public class StateView extends LinearLayout {
      * Sets line spacing for this TextView.  Each line will have its height
      * multiplied by <code>mult</code> and have <code>add</code> added to it.
      *
-     * @attr ref android.R.styleable#TextView_lineSpacingExtra
-     * @attr ref android.R.styleable#TextView_lineSpacingMultiplie
+     * @param add android.R.styleable#TextView_lineSpacingExtra
+     * @param mult android.R.styleable#TextView_lineSpacingMultiplie
      */
     public void setTitleLineSpacing(float add, float mult) {
         mTitleTextView.setLineSpacing(add, mult);
