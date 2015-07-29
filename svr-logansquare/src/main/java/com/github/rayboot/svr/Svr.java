@@ -7,6 +7,7 @@ import android.view.View;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.VolleyLog;
 import com.github.rayboot.svr.stateview.StateView;
 
 import java.util.HashMap;
@@ -31,8 +32,6 @@ public class Svr<T> {
     final int WIFI_TIMEOUT_TIME = 15 * 1000;
     final int MOBILE_TIMEOUT_TIME = 60 * 1000;
     int mCustomTimeOut = -1;
-
-    final boolean DEBUG = true;
 
     public static <T> Svr<T> builder(Context context, Class<T> classOfT) {
         return new Svr<T>().with(context).gsonClass(classOfT);
@@ -131,7 +130,7 @@ public class Svr<T> {
         volleyRequest.finishListener(mFinishListener);
         volleyRequest.errorView(mErrorView);
         volleyRequest.setShouldCache(false);
-        if (DEBUG) {
+        if (VolleyLog.DEBUG) {
             StringBuilder params = new StringBuilder(10);
             params.append("?");
             try {
@@ -150,7 +149,7 @@ public class Svr<T> {
             } catch (AuthFailureError authFailureError) {
                 authFailureError.printStackTrace();
             }
-            System.out.println("volley req url = " + mUrl + params.toString());
+            VolleyLog.v("volley req url =  %s", mUrl + params.toString());
         }
         SvrVolley.getInstance().addToRequestQueue(volleyRequest, tag);
     }

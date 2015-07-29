@@ -18,12 +18,13 @@ import java.util.Map;
  * @author rayboot
  */
 public class SvrVolley {
-    public static final String TAG = "SgrVolley";
+    public static final String TAG = "Svr";
     private static SvrVolley svrVolley = new SvrVolley();
     private static Context mainContext;
 
     public static void Init(Application application) {
         mainContext = application;
+        VolleyLog.setTag(TAG);
     }
 
     public static Context getMainContext() {

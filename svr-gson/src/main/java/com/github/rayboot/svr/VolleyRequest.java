@@ -32,6 +32,7 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.github.rayboot.svr.stateview.ErrorViewContent;
 import com.github.rayboot.svr.stateview.HttpStatusCodes;
@@ -60,6 +61,7 @@ public class VolleyRequest<T> extends Request<T> {
 
     /**
      * 带有超时时间的request
+     *
      * @param method
      * @param url
      * @param clazz
@@ -67,7 +69,7 @@ public class VolleyRequest<T> extends Request<T> {
      * @param errorListener
      * @param params
      * @param gson
-     * @param timeout 设置超时时间
+     * @param timeout       设置超时时间
      */
     public VolleyRequest(int method, String url, Class<T> clazz,
                          Listener<T> listener, ErrorListener errorListener,
@@ -181,6 +183,7 @@ public class VolleyRequest<T> extends Request<T> {
                     NetworkUtil.isGzipSupport(response) ? GzipUtil.decompress(
                             response.data) : new String(response.data,
                             HttpHeaderParser.parseCharset(response.headers));
+            VolleyLog.v("response json = %s", json);
             return Response.success(mGson.fromJson(json, mClazz), HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {
             return Response.error(new ParseError(e));
@@ -191,7 +194,9 @@ public class VolleyRequest<T> extends Request<T> {
         }
     }
 
-    /** Callback interface for delivering errorView responses. */
+    /**
+     * Callback interface for delivering errorView responses.
+     */
     public interface FinishListener<T> {
         /**
          * Callback method that an errorView has been occurred with the

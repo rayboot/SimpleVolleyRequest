@@ -35,8 +35,7 @@ public class MainActivity extends BaseActivity {
         Svr.builder(this, BaseModule.class)
                 .requestParams(params)
                 .stateView(stateView)
-                .timeout(15 * 1000)
-                .url("http://220.178.51.183/timefaceapi/v2/time/timelist")
+                .url("http://timefaceapi.timeface.cn/timefaceapi/v2/time/timelist")
                 .finishListener(new VolleyRequest.FinishListener<BaseModule>() {
                     @Override
                     public void onFinishResponse(boolean isSuccess, BaseModule response, VolleyError error) {
