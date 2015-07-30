@@ -139,7 +139,6 @@ public class VolleyRequest<T> extends Request<T> {
             errorRes = R.string.state_error_parse_error;
         }
 
-        Toast.makeText(SvrVolley.getMainContext(), errorRes, Toast.LENGTH_SHORT).show();
         if (clickView != null) {
             this.clickView.setClickable(true);
             this.clickView.setEnabled(true);
@@ -156,6 +155,10 @@ public class VolleyRequest<T> extends Request<T> {
         }
         if (mFinishListener != null) {
             mFinishListener.onFinishResponse(false, null, error);
+        }
+
+        if (mFinishListener == null && getErrorListener() == null) {
+            Toast.makeText(SvrVolley.getMainContext(), errorRes, Toast.LENGTH_SHORT).show();
         }
     }
 
