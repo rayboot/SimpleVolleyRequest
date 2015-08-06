@@ -23,7 +23,7 @@ ext {
     siteUrl = 'https://github.com/rayboot/SimpleVolleyRequest'
     gitUrl = 'https://github.com/rayboot/SimpleVolleyRequest.git'
 
-    libraryVersion = "1.0.5"
+    libraryVersion = "1.0.6"
 
     developerId = 'rayboot'
     developerName = 'Yan Shi'
@@ -41,8 +41,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 20150729
-        versionName "1.0.5"
+        versionCode 20150808
+        versionName "1.0.6"
     }
     buildTypes {
         release {
@@ -61,7 +61,7 @@ dependencies {
     compile 'com.bluelinelabs:logansquare:1.1.0'
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.4.0'
-    compile 'com.mcxiaoke.volley:library:1.0.17'
+    compile 'com.mcxiaoke.volley:library:1.0.18'
 }
 
 apply from: '../install.gradle'
