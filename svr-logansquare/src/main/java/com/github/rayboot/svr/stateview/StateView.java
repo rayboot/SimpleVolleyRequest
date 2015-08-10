@@ -158,9 +158,7 @@ public class StateView extends LinearLayout {
      * @param content HTTP status code
      */
     public void setState(ErrorViewContent content) {
-        if (mUseIntrinsicAnimation && mErrorImageView.getDrawable() != null) {
-            ((AnimationDrawable) mErrorImageView.getDrawable()).stop();
-        }
+        stopAnimationErrorImage();
         if (content == null) {
             this.setVisibility(GONE);
             return;
@@ -171,11 +169,7 @@ public class StateView extends LinearLayout {
         showRetryButton(content.haveButton());
 
         if (isImageViewVisible()) {
-            mErrorImageView.setImageResource(content.getImgRes());
-            mUseIntrinsicAnimation = mErrorImageView.getDrawable() instanceof AnimationDrawable;
-            if (mUseIntrinsicAnimation) {
-                ((AnimationDrawable) mErrorImageView.getDrawable()).start();
-            }
+            setImageResource(content.getImgRes());
         }
 
         if (isTitleVisible()) {
@@ -202,13 +196,27 @@ public class StateView extends LinearLayout {
         }
     }
 
+    private void stopAnimationErrorImage() {
+        if (mUseIntrinsicAnimation && mErrorImageView.getDrawable() != null) {
+            ((AnimationDrawable) mErrorImageView.getDrawable()).stop();
+        }
+    }
+    private void startAnimationErrorImage() {
+        mUseIntrinsicAnimation = mErrorImageView.getDrawable() instanceof AnimationDrawable;
+        if (mUseIntrinsicAnimation) {
+            ((AnimationDrawable) mErrorImageView.getDrawable()).start();
+        }
+    }
+
     /**
      * Sets error image to a given drawable resource
      *
      * @param res drawable resource.
      */
     public void setImageResource(int res) {
+        stopAnimationErrorImage();
         mErrorImageView.setImageResource(res);
+        startAnimationErrorImage();
     }
 
     /**
@@ -217,7 +225,9 @@ public class StateView extends LinearLayout {
      * @param drawable {@link Drawable} to use as error image.
      */
     public void setImageDrawable(Drawable drawable) {
+        stopAnimationErrorImage();
         mErrorImageView.setImageDrawable(drawable);
+        startAnimationErrorImage();
     }
 
     /**
@@ -226,7 +236,9 @@ public class StateView extends LinearLayout {
      * @param bitmap {@link Bitmap} to use as error image.
      */
     public void setImageBitmap(Bitmap bitmap) {
+        stopAnimationErrorImage();
         mErrorImageView.setImageBitmap(bitmap);
+        startAnimationErrorImage();
     }
 
     /**
