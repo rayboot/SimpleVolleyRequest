@@ -23,7 +23,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/loading"
         android:textColor="@color/error_view_text"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <TextView
@@ -39,11 +39,12 @@
         android:id="@+id/error_retry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
+        android:gravity="center_horizontal"
+        android:layout_margin="16dp"
+        android:minWidth="200dp"
+        android:textSize="20sp"
         android:background="@drawable/selector_state_btn"
         android:padding="8dp"
         android:text="@string/state_btn_retry"
-        android:textColor="@color/error_view_text_dark"
-        android:textStyle="bold" />
+        android:textColor="@color/error_view_text_light" />
 </LinearLayout>
