@@ -22,7 +22,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
         android:text="@string/loading"
-        android:textColor="@color/error_view_text"
+        android:textColor="@color/error_view_text_dark"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
-        android:textColor="@color/error_view_text_light"
+        android:textColor="@color/error_view_text_dark"
         tools:text="Couldn\'t load items" />
 
     <TextView
