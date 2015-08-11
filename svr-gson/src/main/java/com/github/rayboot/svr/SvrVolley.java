@@ -24,6 +24,7 @@ public class SvrVolley {
 
     public static void Init(Application application) {
         mainContext = application;
+        //adb shell setprop log.tag.Svr VERBOSE
         VolleyLog.setTag(TAG);
     }
 
