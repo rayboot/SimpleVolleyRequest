@@ -1,6 +1,6 @@
 # SimpleVolleyRequest
-*A simple json request use volley , and convert to object use Gson or LoganSuqare.
-Svr use builder pattern to implement volley request.*
+*A simple json request use volley.
+Svr use builder pattern to implement volley request.
 
 
 #### What is Svr
@@ -56,7 +56,12 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        SvrVolley.Init(this);
+        SvrVolley.Init(this, new IJsonParser() {
+            @Override
+            public <T> T parseJson(String jsonString, Class<T> mClazz) {
+                return new Gson().fromJson(jsonString, mClazz);
+            }
+        }, new OkHttpStack());
     }
 }
 ```
@@ -139,13 +144,8 @@ Usage
 Gradle:
 
     dependencies {
-        compile 'com.github.rayboot.svr:svr-gson:1.0.3'
+        compile 'com.github.rayboot.svr:svr:2.0.0'
     }
 
-or
-
-    dependencies {
-        compile 'com.github.rayboot.svr:svr-logansquare:1.0.3'
-    }
 
     
