@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="error_view_text">#999999</color>
-    <color name="error_view_text_dark">#CC000000</color>
-    <color name="error_view_text_light">#ffffff</color>
-
-    <color name="error_view_retry_button_background">#069bf2</color>
-    <color name="error_view_retry_button_background_hover">#058ccd</color>
-</resources>
