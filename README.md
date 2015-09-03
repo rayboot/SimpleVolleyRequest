@@ -16,8 +16,6 @@ Svr auto set every request's tag and will auto cancel the request which set tag 
         Svr.builder(this, BaseModule.class) //context must implement INetWork,it will auto to set the request tag.Or you can use .tag() function to set tag.
                 .url()              //the url you will request.
                 .method()           //default is post you could set get or post.
-                .gson()             //default is new Gson you could set it as you want.
-                                    //if you use logansquare, don't set this param.
                 .requestParams()    //set request parmas.
                 .setHeaders()       //set request headers.
                 .finishListener()   //either fault or success request all will callback this function
@@ -61,7 +59,7 @@ public class App extends Application {
             public <T> T parseJson(String jsonString, Class<T> mClazz) {
                 return new Gson().fromJson(jsonString, mClazz);
             }
-        }, new OkHttpStack());
+        }, new OkHttpStack()); //if you don't use okhttp,please set null in the last param.
     }
 }
 ```
