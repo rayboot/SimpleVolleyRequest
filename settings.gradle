@@ -1,1 +1,1 @@
-include ':app', ':svr-gson', ':svr-logansquare'
+include ':app', ':svr'

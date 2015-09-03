@@ -10,8 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/svr-gson" />
-            <option value="$PROJECT_DIR$/svr-logansquare" />
+            <option value="$PROJECT_DIR$/svr" />
           </set>
         </option>
       </GradleProjectSettings>

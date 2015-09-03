@@ -4,8 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SimpleVolleyRequest.iml" filepath="$PROJECT_DIR$/SimpleVolleyRequest.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/svr-gson/svr-gson.iml" filepath="$PROJECT_DIR$/svr-gson/svr-gson.iml" />
-      <module fileurl="file://$PROJECT_DIR$/svr-logansquare/svr-logansquare.iml" filepath="$PROJECT_DIR$/svr-logansquare/svr-logansquare.iml" />
+      <module fileurl="file://$PROJECT_DIR$/svr/svr.iml" filepath="$PROJECT_DIR$/svr/svr.iml" />
     </modules>
   </component>
 </project>
