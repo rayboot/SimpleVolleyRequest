@@ -26,7 +26,6 @@ import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.RetryPolicy;
 import com.android.volley.ServerError;
@@ -48,7 +47,6 @@ import java.util.Map;
  */
 public class VolleyRequest<T> extends Request<T> {
     protected Class<T> mClazz;
-    protected Listener<T> mSuccessListener;
     protected FinishListener<T> mFinishListener;
     protected Map<String, String> mParams;
     protected Map<String, String> mHeaders;
@@ -62,17 +60,13 @@ public class VolleyRequest<T> extends Request<T> {
      * @param method
      * @param url
      * @param clazz
-     * @param listener
-     * @param errorListener
      * @param params
      * @param timeout       设置超时时间
      */
     public VolleyRequest(int method, String url, Class<T> clazz,
-                         Listener<T> listener, ErrorListener errorListener,
                          Map<String, String> params, Map<String, String> headers, int timeout) {
-        super(method, url, errorListener);
+        super(method, url, null);
         mClazz = clazz;
-        mSuccessListener = listener;
         mParams = params == null ? new HashMap<String, String>() : params;
         this.curTimeout = timeout;
         this.mHeaders = headers;
@@ -150,9 +144,7 @@ public class VolleyRequest<T> extends Request<T> {
         }
         if (mFinishListener != null) {
             mFinishListener.onFinishResponse(false, null, error);
-        }
-
-        if (mFinishListener == null && getErrorListener() == null) {
+        } else {
             Toast.makeText(SvrVolley.getMainContext(), errorRes, Toast.LENGTH_SHORT).show();
         }
     }
@@ -166,9 +158,7 @@ public class VolleyRequest<T> extends Request<T> {
         if (errorView != null) {
             errorView.setState(ErrorViewContent.getContentObj(HttpStatusCodes.FINISH));
         }
-        if (mSuccessListener != null) {
-            mSuccessListener.onResponse(response);
-        }
+
         if (mFinishListener != null) {
             mFinishListener.onFinishResponse(true, response, null);
         }
@@ -198,7 +188,14 @@ public class VolleyRequest<T> extends Request<T> {
          * Callback method that an errorView has been occurred with the
          * provided errorView code and optional user-readable message.
          */
-        public void onFinishResponse(boolean isSuccess, T response,
+        void onFinishResponse(boolean isSuccess, T response,
                                      VolleyError error);
+
+        void onCacheResult(String cacheData);
+    }
+
+    @Override
+    public String getCacheKey() {
+        return NetworkUtil.getFullUrl(this.getUrl(), mParams);
     }
 }

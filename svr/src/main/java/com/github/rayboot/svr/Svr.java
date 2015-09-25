@@ -4,17 +4,18 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.android.volley.AuthFailureError;
+import com.android.volley.Cache;
 import com.android.volley.Request;
-import com.android.volley.Response;
 import com.android.volley.VolleyLog;
 import com.github.rayboot.svr.stateview.StateView;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
+ * adb shell setprop log.tag.Svr VERBOSE
+ *
  * @author rayboot
  */
 public class Svr<T> {
@@ -22,8 +23,6 @@ public class Svr<T> {
     String mUrl;
     String mTag;
     Class<T> mClazz;
-    Response.Listener<T> mSuccessListener;
-    Response.ErrorListener mErrorListener;
     View mClickView = null;
     Map<String, String> mParams = new HashMap<String, String>();
     VolleyRequest.FinishListener<T> mFinishListener;
@@ -32,6 +31,7 @@ public class Svr<T> {
     final int WIFI_TIMEOUT_TIME = 15 * 1000;
     final int MOBILE_TIMEOUT_TIME = 60 * 1000;
     int mCustomTimeOut = -1;
+    boolean shouldCache = true;
 
     public static <T> Svr<T> builder(Context context, Class<T> classOfT) {
         return new Svr<T>().with(context).gsonClass(classOfT);
@@ -57,18 +57,14 @@ public class Svr<T> {
         return this;
     }
 
-    public Svr<T> successListener(Response.Listener<T> listener) {
-        this.mSuccessListener = listener;
+
+    public Svr<T> shouldCache(boolean shouldCache) {
+        this.shouldCache = shouldCache;
         return this;
     }
 
     public Svr<T> finishListener(VolleyRequest.FinishListener<T> listener) {
         this.mFinishListener = listener;
-        return this;
-    }
-
-    public Svr<T> errorListener(Response.ErrorListener listener) {
-        this.mErrorListener = listener;
         return this;
     }
 
@@ -122,34 +118,34 @@ public class Svr<T> {
 
 
         VolleyRequest<T> gsonRequest = new VolleyRequest<T>(this.mMethod, this.mUrl,
-                this.mClazz, this.mSuccessListener,
-                this.mErrorListener, mParams, mHeaders, mCustomTimeOut > 0 ? mCustomTimeOut : NetworkUtil.isWifiConnected(SvrVolley.getMainContext()) ? WIFI_TIMEOUT_TIME : MOBILE_TIMEOUT_TIME);
+                this.mClazz, mParams, mHeaders, mCustomTimeOut > 0 ? mCustomTimeOut : NetworkUtil.isWifiConnected(SvrVolley.getMainContext()) ? WIFI_TIMEOUT_TIME : MOBILE_TIMEOUT_TIME);
 
         gsonRequest.oneClickView(mClickView);
         gsonRequest.finishListener(mFinishListener);
         gsonRequest.errorView(mErrorView);
-        gsonRequest.setShouldCache(false);
+        gsonRequest.setShouldCache(shouldCache);
+
         if (VolleyLog.DEBUG) {
-            StringBuilder params = new StringBuilder(10);
-            params.append("?");
-            try {
-                if (gsonRequest.getParams() != null
-                        && gsonRequest.getParams().size() > 0) {
-                    Iterator iter = gsonRequest.getParams().entrySet().iterator();
-                    while (iter.hasNext()) {
-                        Map.Entry entry = (Map.Entry) iter.next();
-                        params.append(entry.getKey());
-                        params.append("=");
-                        params.append(entry.getValue());
-                        params.append("&");
-                    }
-                }
-                params.deleteCharAt(params.length() - 1);
-            } catch (AuthFailureError authFailureError) {
-                authFailureError.printStackTrace();
-            }
-            VolleyLog.v("volley req url =  %s", mUrl + params.toString());
+            VolleyLog.v("volley req url =  %s", NetworkUtil.getFullUrl(mUrl, mParams));
         }
+
         SvrVolley.getInstance().addToRequestQueue(gsonRequest, tag);
+        checkCache();
+    }
+
+    private void checkCache() {
+        if (mFinishListener == null) {
+            return;
+        }
+
+        Cache cache = SvrVolley.getInstance().getRequestQueue().getCache();
+        Cache.Entry entry = cache.get(NetworkUtil.getFullUrl(mUrl, mParams));
+        if (entry != null) {
+            try {
+                mFinishListener.onCacheResult(new String(entry.data, "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

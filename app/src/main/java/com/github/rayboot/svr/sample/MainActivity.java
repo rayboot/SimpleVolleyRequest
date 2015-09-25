@@ -40,12 +40,18 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onFinishResponse(boolean isSuccess, BaseModule response, VolleyError error) {
 
+                        Toast.makeText(MainActivity.this, "do finish response.", Toast.LENGTH_SHORT).show();
                         if (isSuccess) {
                             //do something with response
                         } else {
                             //deal some error info
                         }
 
+                    }
+
+                    @Override
+                    public void onCacheResult(String cacheData) {
+                        Toast.makeText(MainActivity.this, "do cache.", Toast.LENGTH_SHORT).show();
                     }
                 }).post2Queue();
     }

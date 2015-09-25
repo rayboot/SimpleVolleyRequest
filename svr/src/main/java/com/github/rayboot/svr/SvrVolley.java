@@ -16,6 +16,7 @@ import java.util.Map;
 
 
 /**
+ * adb shell setprop log.tag.Svr VERBOSE
  * @author rayboot
  */
 public class SvrVolley {
@@ -148,5 +149,13 @@ public class SvrVolley {
             }
         }
         return result;
+    }
+
+    public void clearCaches() {
+        getInstance().getRequestQueue().getCache().clear();
+    }
+
+    public void removeCache(String key) {
+        getInstance().getRequestQueue().getCache().remove(key);
     }
 }

@@ -27,6 +27,21 @@ public class NetworkUtil {
         return false;
     }
 
+    public static String getFullUrl(String url, Map<String, String> params) {
+        if (params == null || params.size() == 0) {
+            return url;
+        }
+
+        StringBuilder fullUrl = new StringBuilder();
+        fullUrl.append(url);
+        fullUrl.append("?");
+        for (Map.Entry entry : params.entrySet()) {
+            fullUrl.append(String.format("%s=%s&", entry.getKey(), entry.getValue()));
+        }
+        fullUrl.deleteCharAt(fullUrl.length() - 1);
+        return fullUrl.toString();
+    }
+
 
     public static boolean isWifiConnected(Context context) {
         if (context != null) {
