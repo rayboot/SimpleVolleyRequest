@@ -16,11 +16,10 @@ Svr auto set every request's tag and will auto cancel the request which set tag 
         Svr.builder(this, BaseModule.class) //context must implement INetWork,it will auto to set the request tag.Or you can use .tag() function to set tag.
                 .url()              //the url you will request.
                 .method()           //default is post you could set get or post.
+                .shouldCache(true)  //should cache
                 .requestParams()    //set request parmas.
                 .setHeaders()       //set request headers.
                 .finishListener()   //either fault or success request all will callback this function
-                .errorListener()    //only fault request will call this function
-                .successListener()  //only success request will call this function
                 .clickView()        //you could set some view it can't double click when the request is not return
                 .stateView()        //set stateView to Svr.Svr will help to show some http state
                 .timeout()          //set time out time.By default wifi is 15' others is 60'
@@ -41,6 +40,10 @@ So the simple request is like
                             //deal some error info
                         }
             }
+                @Override
+                public void onCacheResult(BaseModule cacheData) {
+                    Log.e(TAG, "onCacheResult do cache");
+                }
         }).post2Queue();
 ```
 
@@ -142,7 +145,7 @@ Usage
 Gradle:
 
     dependencies {
-        compile 'com.github.rayboot.svr:svr:2.0.0'
+        compile 'com.github.rayboot.svr:svr:2.1.1'
     }
 
 
