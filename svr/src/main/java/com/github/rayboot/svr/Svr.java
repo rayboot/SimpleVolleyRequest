@@ -6,7 +6,9 @@ import android.view.View;
 
 import com.android.volley.Cache;
 import com.android.volley.Request;
+import com.android.volley.Response;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.github.rayboot.svr.stateview.StateView;
 
 import java.io.UnsupportedEncodingException;
@@ -138,11 +140,10 @@ public class Svr<T> {
             return;
         }
 
-        Cache cache = SvrVolley.getInstance().getRequestQueue().getCache();
-        Cache.Entry entry = cache.get(NetworkUtil.getFullUrl(mUrl, mParams));
+        Cache.Entry entry = SvrVolley.getInstance().getRequestQueue().getCache().get(NetworkUtil.getFullUrl(mUrl, mParams));
         if (entry != null) {
             try {
-                mFinishListener.onCacheResult(new String(entry.data, "UTF-8"));
+                mFinishListener.onCacheResult(SvrVolley.getInstance().getJsonParser().parseJson(new String(entry.data, "UTF-8"), mClazz));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }

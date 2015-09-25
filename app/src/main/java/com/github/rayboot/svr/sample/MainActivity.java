@@ -1,6 +1,7 @@
 package com.github.rayboot.svr.sample;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
@@ -40,6 +41,7 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onFinishResponse(boolean isSuccess, BaseModule response, VolleyError error) {
 
+                        Log.e(TAG, "onFinishResponse do finish response");
                         Toast.makeText(MainActivity.this, "do finish response.", Toast.LENGTH_SHORT).show();
                         if (isSuccess) {
                             //do something with response
@@ -50,7 +52,8 @@ public class MainActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onCacheResult(String cacheData) {
+                    public void onCacheResult(BaseModule cacheData) {
+                        Log.e(TAG, "onCacheResult do cache");
                         Toast.makeText(MainActivity.this, "do cache.", Toast.LENGTH_SHORT).show();
                     }
                 }).post2Queue();

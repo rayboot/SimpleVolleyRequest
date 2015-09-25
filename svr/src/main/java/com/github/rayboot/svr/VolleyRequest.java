@@ -191,7 +191,7 @@ public class VolleyRequest<T> extends Request<T> {
         void onFinishResponse(boolean isSuccess, T response,
                                      VolleyError error);
 
-        void onCacheResult(String cacheData);
+        void onCacheResult(T cacheResponse);
     }
 
     @Override
