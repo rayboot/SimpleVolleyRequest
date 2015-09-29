@@ -171,7 +171,7 @@ public class VolleyRequest<T> extends Request<T> {
                     NetworkUtil.isGzipSupport(response) ? GzipUtil.decompress(
                             response.data) : new String(response.data,
                             HttpHeaderParser.parseCharset(response.headers));
-            VolleyLog.v("response json = %s", json);
+            VolleyLog.v("Response Class name = %s  json = %s", mClazz.getSimpleName(), json);
             return Response.success(SvrVolley.getInstance().getJsonParser().parseJson(json, mClazz), HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {
             return Response.error(new ParseError(e));
