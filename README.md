@@ -145,7 +145,7 @@ Usage
 Gradle:
 
     dependencies {
-        compile 'com.github.rayboot.svr:svr:2.1.1'
+        compile 'com.github.rayboot.svr:svr:2.1.2'
     }
 
 
