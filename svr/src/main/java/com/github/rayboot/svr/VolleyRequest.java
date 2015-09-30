@@ -198,7 +198,6 @@ public class VolleyRequest<T> extends Request<T> {
 
         default void onCacheResult(T cacheResponse) {
             VolleyLog.v("Cache name = %s", cacheResponse.getClass().getSimpleName());
-            return;
         }
     }
 }
