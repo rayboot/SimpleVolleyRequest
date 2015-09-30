@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/rayboot/SimpleVolleyRequest'
     gitUrl = 'https://github.com/rayboot/SimpleVolleyRequest.git'
 
-    libraryVersion = "2.1.3"
+    libraryVersion = "2.1.4"
 
     developerId = 'rayboot'
     developerName = 'Yan Shi'
@@ -37,7 +37,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 20150930
-        versionName "2.1.3"
+        versionName "2.1.4"
     }
     buildTypes {
         release {
