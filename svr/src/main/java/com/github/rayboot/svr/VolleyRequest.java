@@ -195,8 +195,6 @@ public class VolleyRequest<T> extends Request<T> {
         void onFinishResponse(boolean isSuccess, T response,
                               VolleyError error);
 
-        default void onCacheResult(T cacheResponse) {
-            VolleyLog.v("Cache name = %s", cacheResponse.getClass().getSimpleName());
-        }
+        void onCacheResult(T cacheResponse);
     }
 }

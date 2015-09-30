@@ -50,6 +50,11 @@ public class MainActivity extends BaseActivity {
                         }
 
                     }
+
+                    @Override
+                    public void onCacheResult(BaseModule cacheResponse) {
+
+                    }
                 }).post2Queue();
     }
 
