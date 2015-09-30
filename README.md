@@ -17,7 +17,7 @@ Svr auto set every request's tag and will auto cancel the request which set tag 
                 .url()              //the url you will request.
                 .method()           //default is post you could set get or post.
                 .shouldCache(true)  //should cache
-                .retureCache(true)  //set true the onCacheResult will return data.
+                .returnCache(true)  //set true the onCacheResult will return data.
                 .requestParams()    //set request parmas.
                 .setHeaders()       //set request headers.
                 .clickView()        //you could set some view it can't double click when the request is not return
