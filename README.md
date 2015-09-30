@@ -17,12 +17,13 @@ Svr auto set every request's tag and will auto cancel the request which set tag 
                 .url()              //the url you will request.
                 .method()           //default is post you could set get or post.
                 .shouldCache(true)  //should cache
+                .retureCache(true)  //set true the onCacheResult will return data.
                 .requestParams()    //set request parmas.
                 .setHeaders()       //set request headers.
-                .finishListener()   //either fault or success request all will callback this function
                 .clickView()        //you could set some view it can't double click when the request is not return
                 .stateView()        //set stateView to Svr.Svr will help to show some http state
                 .timeout()          //set time out time.By default wifi is 15' others is 60'
+                .finishListener()   //either fault or success request all will callback this function
                 .post2Queue();      //the last function to add the request to queue
 ```
 
