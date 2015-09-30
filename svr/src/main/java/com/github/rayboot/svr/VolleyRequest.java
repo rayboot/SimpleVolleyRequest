@@ -180,6 +180,11 @@ public class VolleyRequest<T> extends Request<T> {
         }
     }
 
+    @Override
+    public String getCacheKey() {
+        return NetworkUtil.getFullUrl(this.getUrl(), mParams);
+    }
+
     /**
      * Callback interface for delivering errorView responses.
      */
@@ -189,16 +194,11 @@ public class VolleyRequest<T> extends Request<T> {
          * provided errorView code and optional user-readable message.
          */
         void onFinishResponse(boolean isSuccess, T response,
-                                     VolleyError error);
+                              VolleyError error);
 
         default void onCacheResult(T cacheResponse) {
             VolleyLog.v("Cache name = %s", cacheResponse.getClass().getSimpleName());
             return;
         }
-    }
-
-    @Override
-    public String getCacheKey() {
-        return NetworkUtil.getFullUrl(this.getUrl(), mParams);
     }
 }

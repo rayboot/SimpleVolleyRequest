@@ -6,9 +6,7 @@ import android.view.View;
 
 import com.android.volley.Cache;
 import com.android.volley.Request;
-import com.android.volley.Response;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.HttpHeaderParser;
 import com.github.rayboot.svr.stateview.StateView;
 
 import java.io.UnsupportedEncodingException;
@@ -34,6 +32,7 @@ public class Svr<T> {
     final int MOBILE_TIMEOUT_TIME = 60 * 1000;
     int mCustomTimeOut = -1;
     boolean shouldCache = true;
+    boolean returnCache = false;
 
     public static <T> Svr<T> builder(Context context, Class<T> classOfT) {
         return new Svr<T>().with(context).gsonClass(classOfT);
@@ -62,6 +61,12 @@ public class Svr<T> {
 
     public Svr<T> shouldCache(boolean shouldCache) {
         this.shouldCache = shouldCache;
+        return this;
+    }
+
+
+    public Svr<T> returnCache(boolean returnCache) {
+        this.returnCache = returnCache;
         return this;
     }
 
@@ -132,14 +137,12 @@ public class Svr<T> {
         }
 
         SvrVolley.getInstance().addToRequestQueue(gsonRequest, tag);
-        checkCache();
+        if (returnCache && mFinishListener != null) {
+            checkCache();
+        }
     }
 
     private void checkCache() {
-        if (mFinishListener == null) {
-            return;
-        }
-
         Cache.Entry entry = SvrVolley.getInstance().getRequestQueue().getCache().get(NetworkUtil.getFullUrl(mUrl, mParams));
         if (entry != null) {
             try {
