@@ -50,12 +50,6 @@ public class MainActivity extends BaseActivity {
                         }
 
                     }
-
-                    @Override
-                    public void onCacheResult(BaseModule cacheData) {
-                        Log.e(TAG, "onCacheResult do cache");
-                        Toast.makeText(MainActivity.this, "do cache.", Toast.LENGTH_SHORT).show();
-                    }
                 }).post2Queue();
     }
 
