@@ -17,13 +17,13 @@ Svr auto set every request's tag and will auto cancel the request which set tag 
                 .url()              //the url you will request.
                 .method()           //default is post you could set get or post.
                 .shouldCache(true)  //should cache
-                .returnCache(true)  //set true the onCacheResult will return data.
                 .requestParams()    //set request parmas.
                 .setHeaders()       //set request headers.
                 .clickView()        //you could set some view it can't double click when the request is not return
                 .stateView()        //set stateView to Svr.Svr will help to show some http state
                 .timeout()          //set time out time.By default wifi is 15' others is 60'
                 .finishListener()   //either fault or success request all will callback this function
+                .cacheListener()    //return cache data
                 .post2Queue();      //the last function to add the request to queue
 ```
 
@@ -32,19 +32,15 @@ So the simple request is like
 ```java
         Svr.builder(this, BaseModule.class)
                 .url("http://**************")
-                .finishListener(new VolleyRequest.FinishListener<BaseModule>() {
+                .finishListener(new IFinishListener<BaseModule>() {
             @Override
-            public void onFinishResponse(boolean isSuccess, BaseModule response, VolleyError error) {
-                        if (isSuccess) {
+            public void onFinishResponse(boolean success, BaseModule response, VolleyError error) {
+                        if (success) {
                             //do something with response
                         } else {
                             //deal some error info
                         }
             }
-                @Override
-                public void onCacheResult(BaseModule cacheData) {
-                    Log.e(TAG, "onCacheResult do cache");
-                }
         }).post2Queue();
 ```
 

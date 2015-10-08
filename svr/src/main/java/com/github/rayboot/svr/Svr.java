@@ -24,15 +24,15 @@ public class Svr<T> {
     String mTag;
     Class<T> mClazz;
     View mClickView = null;
-    Map<String, String> mParams = new HashMap<String, String>();
-    VolleyRequest.FinishListener<T> mFinishListener;
+    Map<String, String> mParams = new HashMap<>(10);
+    IFinishListener<T> finishListener;
+    ICacheListener<T> cacheListener;
     Map<String, String> mHeaders;
     StateView mErrorView = null;
-    final int WIFI_TIMEOUT_TIME = 15 * 1000;
-    final int MOBILE_TIMEOUT_TIME = 60 * 1000;
+    final int WIFI_TIMEOUT_TIME = 30 * 1000;
+    final int MOBILE_TIMEOUT_TIME = 120 * 1000;
     int mCustomTimeOut = -1;
     boolean shouldCache = true;
-    boolean returnCache = false;
 
     public static <T> Svr<T> builder(Context context, Class<T> classOfT) {
         return new Svr<T>().with(context).gsonClass(classOfT);
@@ -64,14 +64,13 @@ public class Svr<T> {
         return this;
     }
 
-
-    public Svr<T> returnCache(boolean returnCache) {
-        this.returnCache = returnCache;
+    public Svr<T> finishListener(IFinishListener<T> listener) {
+        this.finishListener = listener;
         return this;
     }
 
-    public Svr<T> finishListener(VolleyRequest.FinishListener<T> listener) {
-        this.mFinishListener = listener;
+    public Svr<T> cacheListener(ICacheListener<T> listener) {
+        this.cacheListener = listener;
         return this;
     }
 
@@ -124,11 +123,11 @@ public class Svr<T> {
         }
 
 
-        VolleyRequest<T> gsonRequest = new VolleyRequest<T>(this.mMethod, this.mUrl,
+        VolleyRequest<T> gsonRequest = new VolleyRequest<>(this.mMethod, this.mUrl,
                 this.mClazz, mParams, mHeaders, mCustomTimeOut > 0 ? mCustomTimeOut : NetworkUtil.isWifiConnected(SvrVolley.getMainContext()) ? WIFI_TIMEOUT_TIME : MOBILE_TIMEOUT_TIME);
 
         gsonRequest.oneClickView(mClickView);
-        gsonRequest.finishListener(mFinishListener);
+        gsonRequest.finishListener(finishListener);
         gsonRequest.errorView(mErrorView);
         gsonRequest.setShouldCache(shouldCache);
 
@@ -137,7 +136,8 @@ public class Svr<T> {
         }
 
         SvrVolley.getInstance().addToRequestQueue(gsonRequest, tag);
-        if (returnCache && mFinishListener != null) {
+        //返回cache数据
+        if (cacheListener != null) {
             checkCache();
         }
     }
@@ -146,7 +146,7 @@ public class Svr<T> {
         Cache.Entry entry = SvrVolley.getInstance().getRequestQueue().getCache().get(NetworkUtil.getFullUrl(mUrl, mParams));
         if (entry != null) {
             try {
-                mFinishListener.onCacheResult(SvrVolley.getInstance().getJsonParser().parseJson(new String(entry.data, "UTF-8"), mClazz));
+                cacheListener.onCacheResponse(SvrVolley.getInstance().getJsonParser().parseJson(new String(entry.data, "UTF-8"), mClazz));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }

@@ -46,9 +46,9 @@ import java.util.Map;
  */
 public class VolleyRequest<T> extends Request<T> {
     protected Class<T> mClazz;
-    protected FinishListener<T> mFinishListener;
-    protected Map<String, String> mParams;
-    protected Map<String, String> mHeaders;
+    protected IFinishListener<T> finishListener;
+    protected Map<String, String> params;
+    protected Map<String, String> headers;
     View clickView = null;
     StateView errorView = null;
     private int curTimeout = 15 * 1000;
@@ -66,9 +66,9 @@ public class VolleyRequest<T> extends Request<T> {
                          Map<String, String> params, Map<String, String> headers, int timeout) {
         super(method, url, null);
         mClazz = clazz;
-        mParams = params == null ? new HashMap<String, String>() : params;
+        this.params = params == null ? new HashMap<String, String>() : params;
         this.curTimeout = timeout;
-        this.mHeaders = headers;
+        this.headers = headers;
         setRetryPolicy(getRetryPolicy());
     }
 
@@ -81,8 +81,8 @@ public class VolleyRequest<T> extends Request<T> {
         return this;
     }
 
-    public VolleyRequest<T> finishListener(FinishListener<T> finishListener) {
-        this.mFinishListener = finishListener;
+    public VolleyRequest<T> finishListener(IFinishListener<T> finishListener) {
+        this.finishListener = finishListener;
         return this;
     }
 
@@ -100,16 +100,16 @@ public class VolleyRequest<T> extends Request<T> {
 
     @Override
     protected Map<String, String> getParams() throws AuthFailureError {
-        return mParams;
+        return params;
     }
 
     @Override
     public Map<String, String> getHeaders() throws AuthFailureError {
-        if (mHeaders == null || mHeaders.size() == 0) {
+        if (headers == null || headers.size() == 0) {
             return SvrVolley.getInstance().getCommonHeaders();
         } else {
-            mHeaders.putAll(SvrVolley.getInstance().getCommonHeaders());
-            return mHeaders;
+            headers.putAll(SvrVolley.getInstance().getCommonHeaders());
+            return headers;
         }
     }
 
@@ -132,7 +132,6 @@ public class VolleyRequest<T> extends Request<T> {
             this.clickView.setEnabled(true);
         }
         if (errorView != null) {
-
             if (error.networkResponse == null) {
                 errorView.setState(ErrorViewContent.getContentObj(HttpStatusCodes.NO_CONNECT));
             } else if (error.networkResponse.statusCode > 0) {
@@ -141,8 +140,8 @@ public class VolleyRequest<T> extends Request<T> {
                 errorView.setState(ErrorViewContent.getContentObj(HttpStatusCodes.NO_CONNECT));
             }
         }
-        if (mFinishListener != null) {
-            mFinishListener.onFinishResponse(false, null, error);
+        if (finishListener != null) {
+            finishListener.onFinishResponse(false, null, error);
         } else {
             Toast.makeText(SvrVolley.getMainContext(), errorRes, Toast.LENGTH_SHORT).show();
         }
@@ -158,8 +157,8 @@ public class VolleyRequest<T> extends Request<T> {
             errorView.setState(ErrorViewContent.getContentObj(HttpStatusCodes.FINISH));
         }
 
-        if (mFinishListener != null) {
-            mFinishListener.onFinishResponse(true, response, null);
+        if (finishListener != null) {
+            finishListener.onFinishResponse(true, response, null);
         }
     }
 
@@ -181,20 +180,6 @@ public class VolleyRequest<T> extends Request<T> {
 
     @Override
     public String getCacheKey() {
-        return NetworkUtil.getFullUrl(this.getUrl(), mParams);
-    }
-
-    /**
-     * Callback interface for delivering errorView responses.
-     */
-    public interface FinishListener<T> {
-        /**
-         * Callback method that an errorView has been occurred with the
-         * provided errorView code and optional user-readable message.
-         */
-        void onFinishResponse(boolean isSuccess, T response,
-                              VolleyError error);
-
-        void onCacheResult(T cacheResponse);
+        return NetworkUtil.getFullUrl(this.getUrl(), params);
     }
 }

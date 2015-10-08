@@ -28,7 +28,6 @@ public class SvrVolley {
 
     public static void Init(Application application, IJsonParser jsonParser, HttpStack httpStack) {
         mainContext = application;
-        //adb shell setprop log.tag.Svr VERBOSE
         VolleyLog.setTag(TAG);
         getInstance().setJsonParser(jsonParser);
         getInstance().setHttpStack(httpStack);

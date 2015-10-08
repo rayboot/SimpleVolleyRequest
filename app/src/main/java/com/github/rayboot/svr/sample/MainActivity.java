@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.github.rayboot.svr.IFinishListener;
 import com.github.rayboot.svr.Svr;
 import com.github.rayboot.svr.SvrVolley;
 import com.github.rayboot.svr.VolleyRequest;
@@ -29,7 +30,7 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>(10);
         params.put("type", "1");
         params.put("lastedId", "");
         params.put("imgType", "2");//接口返回imageobj
@@ -37,23 +38,17 @@ public class MainActivity extends BaseActivity {
                 .requestParams(params)
                 .stateView(stateView)
                 .url("http://timefaceapi.timeface.cn/timefaceapi/v2/time/timelist")
-                .finishListener(new VolleyRequest.FinishListener<BaseModule>() {
+                .finishListener(new IFinishListener<BaseModule>() {
                     @Override
-                    public void onFinishResponse(boolean isSuccess, BaseModule response, VolleyError error) {
+                    public void onFinishResponse(boolean success, BaseModule response, VolleyError error) {
 
                         Log.e(TAG, "onFinishResponse do finish response");
                         Toast.makeText(MainActivity.this, "do finish response.", Toast.LENGTH_SHORT).show();
-                        if (isSuccess) {
+                        if (success) {
                             //do something with response
                         } else {
                             //deal some error info
                         }
-
-                    }
-
-                    @Override
-                    public void onCacheResult(BaseModule cacheResponse) {
-
                     }
                 }).post2Queue();
     }
